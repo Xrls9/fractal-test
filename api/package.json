@@ -1,0 +1,27 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "fractal-test-api",
+  "keywords": [
+    "express",
+    "node"
+  ],
+  "homepage": "https://github.com/Xrls9/fractal-test#readme",
+  "bugs": {
+    "url": "https://github.com/Xrls9/fractal-test/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xrls9/fractal-test.git"
+  },
+  "license": "ISC",
+  "author": "Carlos Zapata",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
