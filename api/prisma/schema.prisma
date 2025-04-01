@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id          Int       @id @default(autoincrement())
+  orderNumber String    @map("order-number")
+  date        DateTime  @default(now()) @map("date")
+  total       Decimal   @map("total") @db.Decimal(10, 2)
+  products    Product[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deleteAt  DateTime? @map("deleted_at")
+
+  @@map("orders")
+}
+
+model Product {
+  id    Int     @id @default(autoincrement())
+  name  String
+  price Decimal @map("total") @db.Decimal(10, 2)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deleteAt  DateTime? @map("deleted_at")
+
+  Order   Order? @relation(fields: [orderId], references: [id])
+  orderId Int?
+
+  @@map("products")
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
