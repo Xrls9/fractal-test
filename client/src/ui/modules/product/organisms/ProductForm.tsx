@@ -23,13 +23,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <div className="md:flex md:items-center mb-6 justify-between">
         <div className="">
           <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">

@@ -15,8 +15,8 @@ const CreateOrder: React.FC = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const [order, setOrder] = useState<Order>({
-    id: null,
-    code: "",
+    id: 0,
+    orderNumber: "",
     amount: 0,
     date: today.toLocaleDateString(),
     productsQty: 0,
@@ -37,8 +37,12 @@ const CreateOrder: React.FC = () => {
         `http://localhost:3000/api/orders/${orderId}`
       );
 
-      const data = await response.json();
-      setOrder(data);
+      if (response.ok) {
+        const data = await response.json();
+        const date = new Date(data.date).toLocaleDateString();
+
+        setOrder({ ...data, date });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -46,53 +50,59 @@ const CreateOrder: React.FC = () => {
 
   const handleCreateOrder = async () => {
     try {
-      // const response = await fetch("http://localhost:3000/api/orders", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(order),
-      // });
-      // if (!response.ok) {
-      //   setAlertMessage("Order was not registered");
-      //   setShowAlert(true);
-      //   return;
-      // }
-      setAlert({ message: "Order registered", action: () => goTo("/orders") });
+      const response = await fetch("http://localhost:3000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (!response.ok) {
+        setAlert({
+          message: "Order was not registered",
+          action: () => setShowAlert(false),
+        });
+
+        setShowAlert(true);
+        return;
+      }
+      setAlert({
+        message: "Order registered",
+        action: () => goTo("/orders"),
+      });
       setShowAlert(true);
-      // goTo("/orders");
     } catch (err) {
       console.log("err :>> ", err);
     }
   };
 
   const handleEditOrder = async () => {
-    console.log("object :>> ");
-    // try {
-    //   const response = await fetch(
-    //     `http://localhost:3000/api/orders/${order.id}`,
-    //     {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(newProduct),
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     console.log("No se pudo listar los productos");
-    //     return;
-    //   }
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/orders/${order.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(order),
+        }
+      );
 
-    //   fetchProducts();
-    //   closeModal();
-    // } catch (error) {
-    //   console.log("error :>> ", error);
-    // }
-  };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit();
+      if (!response.ok) {
+        setAlert({
+          message: "Order was not updated",
+          action: () => setShowAlert(false),
+        });
+        setShowAlert(true);
+        return;
+      }
+      setAlert({ message: "Order registered", action: () => goTo("/orders") });
+      setShowAlert(true);
+    } catch (err) {
+      console.log("err :>> ", err);
+    }
   };
 
   const onSubmit = async () => {
@@ -113,12 +123,9 @@ const CreateOrder: React.FC = () => {
 
   return (
     <div className="w-full h-[100vh] p-[20px] flex justify-center items-start">
-      <form
-        className="flex flex-col justify-center w-[65vw] pt-[30px]"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex flex-col justify-center w-[65vw] pt-[30px]">
         <div className="w-full text-center pb-[30px]">
-          <h1>{order.id != 0 ? "New Order" : "Update Order"}</h1>
+          <h1>{order.id != 0 ? "Update Order" : "New Order"}</h1>
         </div>
         <div className="md:flex md:items-center mb-6 justify-between">
           <div className="">
@@ -128,10 +135,10 @@ const CreateOrder: React.FC = () => {
           </div>
           <div className="">
             <input
-              name="code"
+              name="orderNumber"
               className="border-2 border-gray-200 rounded w-full py-2 px-4 leading-tight focus:outline-none"
               type="text"
-              value={order.code}
+              value={order.orderNumber}
               onChange={handleChange}
             />
           </div>
@@ -190,7 +197,7 @@ const CreateOrder: React.FC = () => {
 
         <div className="flex justify-around ">
           <Button
-            label={order.id === null ? "Register" : "Update"}
+            label={order.id === 0 ? "Register" : "Update"}
             onClick={onSubmit}
             className="!bg-blue-500 hover:!bg-blue-700"
           />

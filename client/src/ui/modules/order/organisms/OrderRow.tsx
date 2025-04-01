@@ -2,8 +2,8 @@ import React from "react";
 import ActionButtons from "../../../shared/molecules/ActionButtons";
 
 interface Order {
-  id: number | null;
-  code: string;
+  id: number;
+  orderNumber: string;
   date: string;
   productsQty: number;
   amount: number;
@@ -29,11 +29,13 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
     },
   ];
 
+  const date = new Date(order.date).toLocaleDateString();
+
   return (
     <tr className="border-b border-gray-100 hover:bg-gray-800">
       <td className="py-3 px-6 text-left">{order.id}</td>
-      <td className="py-3 px-6 text-left">{order.code}</td>
-      <td className="py-3 px-6 text-left">{order.date}</td>
+      <td className="py-3 px-6 text-left">{order.orderNumber}</td>
+      <td className="py-3 px-6 text-left">{date}</td>
       <td className="py-3 px-6 text-left">{order.productsQty}</td>
       <td className="py-3 px-6 text-left">{order.amount}</td>
       <td>

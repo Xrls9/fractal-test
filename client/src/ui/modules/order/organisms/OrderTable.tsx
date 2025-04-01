@@ -3,8 +3,8 @@ import React from "react";
 import OrderRow from "./OrderRow";
 
 export interface Order {
-  id: number | null;
-  code: string;
+  id: number;
+  orderNumber: string;
   date: string;
   productsQty: number;
   amount: number;
@@ -28,6 +28,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
           <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
             <th className="py-3 px-6 text-left">Id</th>
             <th className="py-3 px-6 text-left">Order #</th>
+            <th className="py-3 px-6 text-center">Date</th>
             <th className="py-3 px-6 text-center">Products Qty</th>
             <th className="py-3 px-6 text-center">Final Price</th>
             <th className="py-3 px-6 text-center">Options</th>

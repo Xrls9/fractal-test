@@ -11,7 +11,7 @@ const OrderList: React.FC = () => {
 
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
-  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+  const [selectedOrderId, setSelectedOrderId] = useState<number>(0);
 
   const { goTo } = useNavigation();
 
@@ -44,7 +44,7 @@ const OrderList: React.FC = () => {
         }
       );
       if (!response.ok) {
-        console.log("Orders couldn't be displayed");
+        console.log("Order not deleted");
         return;
       }
 
@@ -74,8 +74,7 @@ const OrderList: React.FC = () => {
       <OrderTable
         orders={orders}
         onEditOrder={(orderId) => {
-          setSelectedOrderId(orderId);
-          goTo(`/orders/${selectedOrderId}`);
+          goTo(`/orders/${orderId}`);
         }}
         onDeleteOrder={(orderId) => {
           setSelectedOrderId(orderId);
@@ -88,7 +87,7 @@ const OrderList: React.FC = () => {
           <ConfirmationModal
             show={showConfirmation}
             message="¿Estás seguro de que quieres eliminar esta orden?"
-            onAccept={() => handleDelete}
+            onAccept={() => handleDelete()}
             onCancel={() => setShowConfirmation(false)}
           />
         </div>
