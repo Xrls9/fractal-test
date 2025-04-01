@@ -19,17 +19,17 @@ const ProductTable: React.FC<ProductTableProps> = ({
   onDeleteProduct,
 }) => {
   return (
-    <div>
-      <table className="table">
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md border border-gray-200">
         <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Acciones</th>
+          <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+            <th className="py-3 px-6 text-left">Nombre</th>
+            <th className="py-3 px-6 text-left">Precio</th>
+            <th className="py-3 px-6 text-center">Acciones</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="text-sm">
           {products.map((product) => (
             <ProductRow
               key={product.id}

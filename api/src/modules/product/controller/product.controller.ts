@@ -27,11 +27,12 @@ export async function create(req: Request, res: Response): Promise<void> {
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
-  const { productId, ...rest } = req.body;
+  const product = req.body;
+  const productId = req.params.id;
 
   const result = await ProductService.update(
-    plainToClass(ProductDto, rest),
-    productId
+    plainToClass(ProductDto, product),
+    +productId
   );
 
   res.status(200).json(result);
@@ -39,8 +40,6 @@ export async function update(req: Request, res: Response): Promise<void> {
 
 export async function remove(req: Request, res: Response): Promise<void> {
   const productId = req.params.id;
-
-  console.log(productId);
 
   const result = await ProductService.delete(+productId);
 

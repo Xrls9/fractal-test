@@ -4,29 +4,30 @@ import Button from "../atoms/Button"; // Usamos el componente Button que definim
 interface ActionOption {
   label: string;
   action: () => void;
+  className: string;
 }
 
 interface ActionButtonsProps {
   options: ActionOption[];
+  className: string;
 }
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ options }) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({
+  options,
+  className = "",
+}) => {
   const renderButtons = () => {
     return options.map((option, index) => (
       <Button
         key={index}
         label={option.label}
         onClick={option.action}
-        className="btn btn-secondary mb-2"
+        className={option.className}
       />
     ));
   };
 
-  return (
-    <td>
-      <div>{renderButtons()}</div>
-    </td>
-  );
+  return <div className={className}>{renderButtons()}</div>;
 };
 
 export default ActionButtons;

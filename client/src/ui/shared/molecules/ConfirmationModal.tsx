@@ -1,0 +1,48 @@
+import React from "react";
+
+import Button from "../atoms/Button";
+
+interface ConfirmationModalProps {
+  show: boolean;
+  message: string;
+  onAccept: () => void;
+  onCancel: () => void;
+}
+
+const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+  show,
+  message,
+  onAccept,
+  onCancel,
+}) => {
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/90">
+      <div className="rounded-lg border border-grey shadow-lg p-6 w-96">
+        <div className="flex justify-between items-center pb-2">
+          <h5 className="text-2xl font-semibold w-full text-center">
+            Confirmación
+          </h5>
+        </div>
+        <div className="py-4">
+          <p className="font-semibold text-left py-3">{message}</p>
+        </div>
+        <div className="flex space-x-2 mt-4">
+          <Button
+            label="Ok"
+            className="!bg-blue-500 hover:!bg-blue-700"
+            onClick={onAccept}
+          />
+          <Button
+            label="Cancel"
+            className="!bg-red-500 hover:!bg-red-700"
+            onClick={onCancel}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ConfirmationModal;
