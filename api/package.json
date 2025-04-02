@@ -19,7 +19,8 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/server.ts",
-    "dev": "tsx src/server.ts"
+    "dev": "tsx src/server.ts",
+    "db-push": "npx prisma db push && npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
