@@ -18,6 +18,7 @@
   "author": "Carlos Zapata",
   "type": "module",
   "scripts": {
+    "start": "tsx src/server.ts",
     "dev": "tsx src/server.ts"
   },
   "dependencies": {
