@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 import AlertModal from "../../../shared/molecules/AlertModal";
 import { url } from "../../../../core/services/apiConnection";
 import Select from "../../../shared/molecules/Select";
-import Input from "../../../shared/atoms/Input";
 import { Order } from "../../../../core/templates/order";
 import { Product } from "../../../../core/templates/product";
 import ProductOrderTable from "../organisms/ProductOrderTable";
+import Input from "../../../shared/atoms/Input";
 
 const CreateOrder: React.FC = () => {
   const { goTo } = useNavigation();
