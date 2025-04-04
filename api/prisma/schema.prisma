@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
+  // provider  = "mysql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
@@ -17,6 +18,8 @@ model Order {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
   deleteAt  DateTime? @map("deleted_at")
+
+  OrderProduct OrderProduct[]
 
   @@map("orders")
 }
@@ -39,8 +42,17 @@ model OrderProduct {
   id        Int      @id @default(autoincrement())
   product   Product? @relation(fields: [productId], references: [id])
   productId Int?
-  quantity  Int
-  total     Decimal  @db.Decimal(10, 2)
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
+
+  quantity Int
+  total    Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deleteAt  DateTime? @map("deleted_at")
+
+  @@map("order_products")
 }
 
 enum OrderStatus {

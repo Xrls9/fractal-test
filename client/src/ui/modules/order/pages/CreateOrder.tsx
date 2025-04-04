@@ -31,10 +31,10 @@ const CreateOrder: React.FC = () => {
   const [order, setOrder] = useState<Order>({
     id: 0,
     orderNumber: "",
-    amount: 0,
+    total: 0,
     date: today.toLocaleDateString(),
     productsQty: 0,
-    orderProducts: [],
+    OrderProduct: [],
   });
 
   const [alert, setAlert] = useState<{
@@ -130,11 +130,13 @@ const CreateOrder: React.FC = () => {
   };
 
   const handleDeleteOrderProduct = (productId: number) => {
-    const products = order.orderProducts.filter(
+    const products = order.OrderProduct.filter(
       (p) => p.productId !== productId
     );
-    order.orderProducts = products;
-    calcTotals();
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      OrderProduct: products,
+    }));
   };
 
   const onSubmit = async () => {
@@ -149,7 +151,7 @@ const CreateOrder: React.FC = () => {
     const { name, value } = e.target;
     setOrder((prevOrder) => ({
       ...prevOrder,
-      [name]: name === "amount" ? parseFloat(value) : value,
+      [name]: name === "total" ? parseFloat(value) : value,
     }));
   };
 
@@ -165,20 +167,25 @@ const CreateOrder: React.FC = () => {
     setSelectedProduct({ quantity: 0, id });
   };
 
+  useEffect(() => {
+    calcTotals();
+  }, [order.OrderProduct]);
+
   const calcTotals = () => {
-    const totalAmount = order.orderProducts.reduce((acc, item) => {
-      return acc + item.total;
+    const totalAmount = order.OrderProduct.reduce((acc, item) => {
+      return acc + +item.total;
     }, 0);
+
     setOrder((prevOrder) => ({
       ...prevOrder,
-      productsQty: order.orderProducts.length,
-      amount: totalAmount,
+      productsQty: order.OrderProduct.length,
+      total: +totalAmount,
     }));
   };
 
   const handleProductSelect = () => {
     const product = productList.find((p) => p.id === selectedProduct.id);
-    order.orderProducts.push({
+    order.OrderProduct.push({
       id: 0,
       name: product ? product.name : "",
       productId: selectedProduct.id,
@@ -186,6 +193,7 @@ const CreateOrder: React.FC = () => {
       price: product ? product.price : 0,
       total: product ? product.price * selectedProduct.quantity : 0,
     });
+
     calcTotals();
     closeModal();
   };
@@ -260,10 +268,10 @@ const CreateOrder: React.FC = () => {
           </div>
           <div className="">
             <input
-              name=""
+              name="total"
               className="border-2 border-gray-200 rounded w-full py-2 px-4 leading-tight focus:outline-none"
               type="text"
-              value={order.amount}
+              value={order.total}
               disabled
             />
           </div>
@@ -279,7 +287,7 @@ const CreateOrder: React.FC = () => {
         </div>
 
         <ProductOrderTable
-          orderProducts={order.orderProducts}
+          orderProducts={order.OrderProduct}
           onDeleteProduct={(productId) => {
             handleDeleteOrderProduct(productId);
           }}

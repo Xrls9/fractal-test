@@ -3,8 +3,8 @@ export interface Order {
   orderNumber: string;
   date: string;
   productsQty: number;
-  amount: number;
-  orderProducts: OrderProduct[];
+  total: number;
+  OrderProduct: OrderProduct[];
 }
 
 export interface OrderProduct {

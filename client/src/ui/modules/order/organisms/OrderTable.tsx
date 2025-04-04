@@ -19,8 +19,8 @@ const OrderTable: React.FC<OrderTableProps> = ({
       <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Id</th>
-            <th className="py-3 px-6 text-left">Order #</th>
+            <th className="py-3 px-6 text-center">Id</th>
+            <th className="py-3 px-6 text-center">Order #</th>
             <th className="py-3 px-6 text-center">Date</th>
             <th className="py-3 px-6 text-center">Products Qty</th>
             <th className="py-3 px-6 text-center">Final Price</th>
