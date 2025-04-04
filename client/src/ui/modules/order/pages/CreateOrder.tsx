@@ -9,7 +9,7 @@ import Select from "../../../shared/molecules/Select";
 import { Order } from "../../../../core/templates/order";
 import { Product } from "../../../../core/templates/product";
 import ProductOrderTable from "../organisms/ProductOrderTable";
-import Input from "../../../shared/atoms/Input";
+import Input from "../../../shared/atoms/input";
 
 const CreateOrder: React.FC = () => {
   const { goTo } = useNavigation();

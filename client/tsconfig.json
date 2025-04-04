@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"],
-      "@core/*": ["core/*"],
-      "@modules/*": ["ui/modules/*"],
-      "@shared/*": ["ui/shared/*"]
-    }
+    // "paths": {
+    //   "@/*": ["*"],
+    //   "@core/*": ["core/*"],
+    //   "@modules/*": ["ui/modules/*"],
+    //   "@shared/*": ["ui/shared/*"]
+    // }
   },
   "references": [
     { "path": "./tsconfig.app.json" },
