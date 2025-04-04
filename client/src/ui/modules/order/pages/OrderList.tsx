@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Order } from "../organisms/OrderTable";
 import ConfirmationModal from "../../../shared/molecules/ConfirmationModal";
 import useNavigation from "../../../../core/services/navigationService";
 import OrderTable from "../organisms/OrderTable";
+import { url } from "../../../../core/services/apiConnection";
+import Button from "../../../shared/atoms/Button";
+import { Order } from "../../../../core/templates/order";
 
 const OrderList: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -17,7 +19,7 @@ const OrderList: React.FC = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/orders");
+      const response = await fetch(`${url}/orders`);
       if (!response.ok) {
         throw new Error("Orders couldn't be displayed");
       }
@@ -37,12 +39,9 @@ const OrderList: React.FC = () => {
   const handleDelete = async () => {
     if (selectedOrderId === null) return;
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/orders/${selectedOrderId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${url}/orders/${selectedOrderId}`, {
+        method: "DELETE",
+      });
       if (!response.ok) {
         console.log("Order not deleted");
         return;
@@ -62,13 +61,20 @@ const OrderList: React.FC = () => {
   return (
     <div className="w-full h-[100vh] p-[20px]">
       <div className="flex flex-column justify-between pb-[25px]">
-        <h1>My Orders</h1>
-        <button
+        <div className="flex gap-[15px] items-center">
+          <Button
+            label="&larr;"
+            onClick={() => goTo(`/`)}
+            className="btn btn-primary !rounded-[50%] !py-[15px] size-fit"
+          />
+          <h1>My Orders</h1>
+        </div>
+
+        <Button
+          label="New"
           onClick={() => goTo(`/orders/new`)}
-          className="btn btn-primary mb-3"
-        >
-          New
-        </button>
+          className="btn btn-primary !bg-blue-500"
+        />
       </div>
 
       <OrderTable
@@ -86,7 +92,7 @@ const OrderList: React.FC = () => {
         <div className="flex justify-center mt-10">
           <ConfirmationModal
             show={showConfirmation}
-            message="¿Estás seguro de que quieres eliminar esta orden?"
+            message="Are you sure you want to delete this order?"
             onAccept={() => handleDelete()}
             onCancel={() => setShowConfirmation(false)}
           />

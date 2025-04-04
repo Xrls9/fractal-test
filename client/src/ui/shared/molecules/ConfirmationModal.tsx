@@ -22,13 +22,13 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       <div className="rounded-lg border border-grey shadow-lg p-6 w-96">
         <div className="flex justify-between items-center pb-2">
           <h5 className="text-2xl font-semibold w-full text-center">
-            Confirmación
+            Confirmation
           </h5>
         </div>
         <div className="py-4">
           <p className="font-semibold text-left py-3">{message}</p>
         </div>
-        <div className="flex space-x-2 mt-4">
+        <div className="flex gap-[10px] justify-center">
           <Button
             label="Ok"
             className="!bg-blue-500 hover:!bg-blue-700"

@@ -1,5 +1,5 @@
-import express, { Application, Request } from "express";
-import cors, { CorsOptions } from "cors";
+import express, { Application } from "express";
+import cors from "cors";
 import { router } from "./router";
 
 const PORT = process.env.PORT || 3000;

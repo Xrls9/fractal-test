@@ -1,11 +1,6 @@
 import React from "react";
 import ProductRow from "./ProductRow";
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+import { Product } from "../../../../core/templates/product";
 
 export interface ProductTableProps {
   products: Product[];
@@ -23,9 +18,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
       <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">Nombre</th>
-            <th className="py-3 px-6 text-left">Precio</th>
-            <th className="py-3 px-6 text-center">Acciones</th>
+            <th className="py-3 px-6 text-left">Name</th>
+            <th className="py-3 px-6 text-left">Price</th>
+            <th className="py-3 px-6 text-center">Actions</th>
           </tr>
         </thead>
 

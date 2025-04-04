@@ -1,6 +1,7 @@
 import React from "react";
-import { Product } from "./ProductTable";
+
 import Button from "../../../shared/atoms/Button";
+import { Product } from "../../../../core/templates/product";
 
 interface ProductFormProps {
   product: Product;
@@ -28,7 +29,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <div className="md:flex md:items-center mb-6 justify-between">
         <div className="">
           <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">
-            Nombre
+            Name
           </label>
         </div>
         <div className="">
@@ -45,7 +46,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <div className="md:flex md:items-center mb-6 justify-between">
         <div className="">
           <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">
-            Precio
+            Price
           </label>
         </div>
         <div className="">
@@ -61,13 +62,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
       <div className="flex justify-around ">
         <Button
-          label={product.id === 0 ? "Crear Producto" : "Actualizar Producto"}
+          label={product.id === 0 ? "Register" : "Update"}
           onClick={onSubmit}
           className="!bg-blue-500 hover:!bg-blue-700"
         />
 
         <Button
-          label="Cancelar"
+          label="Cancel"
           onClick={onCancel}
           className="!bg-red-500 hover:!bg-red-700"
         />

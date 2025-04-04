@@ -1,11 +1,6 @@
 import React from "react";
 import ActionButtons from "../../../shared/molecules/ActionButtons";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+import { Product } from "../../../../core/templates/product";
 
 interface ProductRowProps {
   product: Product;
@@ -20,12 +15,12 @@ const ProductRow: React.FC<ProductRowProps> = ({
 }) => {
   const options = [
     {
-      label: "Editar",
+      label: "Edit",
       action: () => onEdit(product),
       className: "!bg-yellow-500 hover:!bg-yellow-700",
     },
     {
-      label: "Eliminar",
+      label: "Delete",
       action: () => onDelete(product.id),
       className: "!bg-red-500 hover:!bg-red-700",
     },
@@ -36,7 +31,10 @@ const ProductRow: React.FC<ProductRowProps> = ({
       <td className="py-3 px-6 text-left">{product.name}</td>
       <td className="py-3 px-6 text-left">{product.price}</td>
       <td>
-        <ActionButtons options={options} className="py-3 px-6 text-center" />
+        <ActionButtons
+          options={options}
+          className="flex py-3 gap-[10px] justify-center"
+        />
       </td>
     </tr>
   );

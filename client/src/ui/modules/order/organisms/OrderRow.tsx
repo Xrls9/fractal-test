@@ -18,12 +18,12 @@ interface OrderRowProps {
 const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
   const options = [
     {
-      label: "Editar",
+      label: "Edit",
       action: () => onEdit(order.id),
-      className: "!bg-yellow-500 hover:!bg-yellow-700",
+      className: "!bg-yellow-500 hover:!bg-yellow-600",
     },
     {
-      label: "Eliminar",
+      label: "Delete",
       action: () => onDelete(order.id),
       className: "!bg-red-500 hover:!bg-red-700",
     },
@@ -39,7 +39,10 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
       <td className="py-3 px-6 text-left">{order.productsQty}</td>
       <td className="py-3 px-6 text-left">{order.amount}</td>
       <td>
-        <ActionButtons options={options} className="py-3 px-6 text-center" />
+        <ActionButtons
+          options={options}
+          className="flex py-3 gap-[10px] justify-center"
+        />
       </td>
     </tr>
   );

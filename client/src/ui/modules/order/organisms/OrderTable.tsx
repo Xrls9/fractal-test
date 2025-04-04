@@ -1,14 +1,7 @@
 import React from "react";
 
 import OrderRow from "./OrderRow";
-
-export interface Order {
-  id: number;
-  orderNumber: string;
-  date: string;
-  productsQty: number;
-  amount: number;
-}
+import { Order } from "../../../../core/templates/order";
 
 export interface OrderTableProps {
   orders: Order[];

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import ProductTable from "../organisms/ProductTable";
-import { Product } from "../organisms/ProductTable";
 
 import ProductForm from "../organisms/ProductForm";
 
 import ConfirmationModal from "../../../shared/molecules/ConfirmationModal";
+import { url } from "../../../../core/services/apiConnection";
+import Button from "../../../shared/atoms/Button";
+import useNavigation from "../../../../core/services/navigationService";
+import { Product } from "../../../../core/templates/product";
 
 const ProductList: React.FC = () => {
+  const { goTo } = useNavigation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -28,7 +32,7 @@ const ProductList: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/products");
+      const response = await fetch(`${url}/products`);
       if (!response.ok) {
         throw new Error("No se pudieron obtener los productos");
       }
@@ -47,7 +51,7 @@ const ProductList: React.FC = () => {
 
   const handleCreateProduct = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/products", {
+      const response = await fetch(`${url}/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,16 +72,13 @@ const ProductList: React.FC = () => {
 
   const handleEditProduct = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/products/${newProduct.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newProduct),
-        }
-      );
+      const response = await fetch(`${url}/products/${newProduct.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      });
       if (!response.ok) {
         console.log("No se pudo listar los productos");
         return;
@@ -93,12 +94,9 @@ const ProductList: React.FC = () => {
   const handleDelete = async () => {
     if (selectedProductId === null) return;
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/products/${selectedProductId}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${url}/products/${selectedProductId}`, {
+        method: "DELETE",
+      });
       if (!response.ok) {
         console.log("No se pudo listar los productos");
         return;
@@ -133,10 +131,20 @@ const ProductList: React.FC = () => {
   return (
     <div className="w-full h-[100vh] p-[20px]">
       <div className="flex flex-column justify-between pb-[25px]">
-        <h1>Lista de Productos</h1>
-        <button onClick={() => openModal()} className="btn btn-primary mb-3">
-          Crear Producto
-        </button>
+        <div className="flex gap-[15px] items-center">
+          <Button
+            label="&larr;"
+            onClick={() => goTo(`/`)}
+            className="btn btn-primary !rounded-[50%] !py-[15px] size-fit"
+          />
+          <h1>Products List</h1>
+        </div>
+
+        <Button
+          label="New"
+          onClick={() => openModal()}
+          className="btn btn-primary !bg-blue-500"
+        />
       </div>
 
       <ProductTable
@@ -154,13 +162,15 @@ const ProductList: React.FC = () => {
           tabIndex={-1}
         >
           <div className="p-6 rounded-lg shadow-lg w-full max-w-md border">
-            <div className="flex justify-between items-center border-b pb-2">
-              <p className="text-lg font-semibold">
-                {isEdit ? "Editar Producto" : "Crear Producto"}
+            <div className="relative w-full  ">
+              <p className="text-lg font-semibold text-center py-[10px]">
+                {isEdit ? "Edit Product" : "Register Product"}
               </p>
-              <button type="button" className="close" onClick={closeModal}>
-                <span>x</span>
-              </button>
+              <Button
+                label="X"
+                onClick={closeModal}
+                className="absolute right-0 top-0"
+              />
             </div>
 
             <div className="mt-4">

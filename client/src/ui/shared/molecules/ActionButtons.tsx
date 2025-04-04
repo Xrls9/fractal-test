@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../atoms/Button"; // Usamos el componente Button que definimos previamente
+import Button from "../atoms/Button";
 
 interface ActionOption {
   label: string;
