@@ -4,17 +4,17 @@ import Button from "../../../shared/atoms/Button";
 import { Product } from "../../../../core/templates/product";
 
 interface ProductFormProps {
+  onCancel: VoidFunction;
+  onSubmit: VoidFunction;
   product: Product;
   setProduct: React.Dispatch<React.SetStateAction<Product>>;
-  onSubmit: () => void;
-  onCancel: () => void;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
+  onCancel,
+  onSubmit,
   product,
   setProduct,
-  onSubmit,
-  onCancel,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

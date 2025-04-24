@@ -3,15 +3,15 @@ import ProductOrderRow from "./ProductOrderRow";
 import { OrderProduct } from "../../../../core/templates/order";
 
 export interface OrderProductTableProps {
-  orderProducts: OrderProduct[];
-  onDeleteProduct: (productId: number) => void;
   className: string;
+  onDeleteProduct: (productId: number) => void;
+  orderProducts: OrderProduct[];
 }
 
 const ProductOrderTable: React.FC<OrderProductTableProps> = ({
-  orderProducts,
-  onDeleteProduct,
   className = "",
+  onDeleteProduct,
+  orderProducts,
 }) => {
   return (
     <div className={`overflow-x-auto ${className}`}>

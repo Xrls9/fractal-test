@@ -3,15 +3,15 @@ import React from "react";
 import Button from "../atoms/Button";
 
 interface ActionOption {
-  label: string;
-  action: () => void;
+  action: VoidFunction;
   className: string;
+  label: string;
 }
 
 interface AlertModalProps {
-  show: boolean;
   message: string;
   option: ActionOption;
+  show: boolean;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({ show, message, option }) => {

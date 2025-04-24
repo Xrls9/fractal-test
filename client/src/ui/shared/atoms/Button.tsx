@@ -1,17 +1,22 @@
 import React from "react";
 
+enum ButtonType {
+  BUTTON = "button",
+  SUBMIT = "submit",
+}
+
 interface ButtonProps {
-  label: string;
-  onClick: () => void;
   className?: string;
-  type?: "button" | "submit";
+  label: string;
+  onClick: VoidFunction;
+  type?: ButtonType;
 }
 
 const Button: React.FC<ButtonProps> = ({
+  className = "",
   label,
   onClick,
-  className = "",
-  type = "button",
+  type = ButtonType.BUTTON,
 }) => {
   return (
     <button type={type} className={className} onClick={onClick}>

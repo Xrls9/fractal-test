@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ProductTable from "../organisms/ProductTable";
 
 import ProductForm from "../organisms/ProductForm";
@@ -49,7 +49,11 @@ const ProductList: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const handleCreateProduct = async () => {
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+
+  const handleCreateProduct = useCallback(async () => {
     try {
       const response = await fetch(`${url}/products`, {
         method: "POST",
@@ -68,9 +72,9 @@ const ProductList: React.FC = () => {
     } catch (err) {
       console.log("err :>> ", err);
     }
-  };
+  }, [closeModal, newProduct]);
 
-  const handleEditProduct = async () => {
+  const handleEditProduct = useCallback(async () => {
     try {
       const response = await fetch(`${url}/products/${newProduct.id}`, {
         method: "PATCH",
@@ -89,9 +93,9 @@ const ProductList: React.FC = () => {
     } catch (error) {
       console.log("error :>> ", error);
     }
-  };
+  }, [closeModal, newProduct]);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     if (selectedProductId === null) return;
     try {
       const response = await fetch(`${url}/products/${selectedProductId}`, {
@@ -107,9 +111,9 @@ const ProductList: React.FC = () => {
     } catch (err) {
       console.log("err :>> ", err);
     }
-  };
+  }, [selectedProductId]);
 
-  const openModal = (product?: Product) => {
+  const openModal = useCallback((product?: Product) => {
     if (product) {
       setIsEdit(true);
       setNewProduct(product);
@@ -118,11 +122,7 @@ const ProductList: React.FC = () => {
       setNewProduct({ id: 0, name: "", price: 0 });
     }
     setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  }, []);
 
   if (loading) {
     return <div>Cargando productos...</div>;
@@ -186,14 +186,12 @@ const ProductList: React.FC = () => {
       )}
 
       {showConfirmation && (
-        <div className="flex justify-center mt-10">
-          <ConfirmationModal
-            show={showConfirmation}
-            message="¿Estás seguro de que quieres eliminar este producto?"
-            onAccept={() => handleDelete()}
-            onCancel={() => setShowConfirmation(false)}
-          />
-        </div>
+        <ConfirmationModal
+          show={showConfirmation}
+          message="Are you sure you want to delete this product?"
+          onAccept={() => handleDelete()}
+          onCancel={() => setShowConfirmation(false)}
+        />
       )}
     </div>
   );

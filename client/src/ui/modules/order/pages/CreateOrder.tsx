@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Button from "../../../shared/atoms/Button";
 import useNavigation from "../../../../core/services/navigationService";
@@ -39,13 +39,25 @@ const CreateOrder: React.FC = () => {
 
   const [alert, setAlert] = useState<{
     message: string;
-    action: () => void;
+    action: VoidFunction;
   }>({ message: "", action: () => {} });
 
   useEffect(() => {
     if (orderId) fetchOrder();
     getProductList();
   }, []);
+
+  const calcTotals = useCallback(() => {
+    const totalAmount = order.OrderProduct.reduce((acc, item) => {
+      return acc + +item.total;
+    }, 0);
+
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      productsQty: order.OrderProduct.length,
+      total: +totalAmount,
+    }));
+  }, [order.OrderProduct]);
 
   const getProductList = async () => {
     try {
@@ -129,15 +141,18 @@ const CreateOrder: React.FC = () => {
     }
   };
 
-  const handleDeleteOrderProduct = (productId: number) => {
-    const products = order.OrderProduct.filter(
-      (p) => p.productId !== productId
-    );
-    setOrder((prevOrder) => ({
-      ...prevOrder,
-      OrderProduct: products,
-    }));
-  };
+  const handleDeleteOrderProduct = useCallback(
+    (productId: number) => {
+      const products = order.OrderProduct.filter(
+        (p) => p.productId !== productId
+      );
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        OrderProduct: products,
+      }));
+    },
+    [order.OrderProduct]
+  );
 
   const onSubmit = async () => {
     if (order.id) {
@@ -147,61 +162,66 @@ const CreateOrder: React.FC = () => {
     handleCreateOrder();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setOrder((prevOrder) => ({
       ...prevOrder,
       [name]: name === "total" ? parseFloat(value) : value,
     }));
-  };
+  }, []);
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: name === "quantity" ? parseFloat(value) : value,
-    }));
-  };
+  const handleQuantityChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setSelectedProduct((prevProduct) => ({
+        ...prevProduct,
+        [name]: name === "quantity" ? parseFloat(value) : value,
+      }));
+    },
+    []
+  );
 
-  const handleSelect = (id: number) => {
+  const handleSelect = useCallback((id: number) => {
     setSelectedProduct({ quantity: 0, id });
-  };
+  }, []);
 
   useEffect(() => {
     calcTotals();
-  }, [order.OrderProduct]);
+  }, [calcTotals, order.OrderProduct]);
 
-  const calcTotals = () => {
-    const totalAmount = order.OrderProduct.reduce((acc, item) => {
-      return acc + +item.total;
-    }, 0);
-
-    setOrder((prevOrder) => ({
-      ...prevOrder,
-      productsQty: order.OrderProduct.length,
-      total: +totalAmount,
-    }));
-  };
-
-  const handleProductSelect = () => {
-    const product = productList.find((p) => p.id === selectedProduct.id);
-    order.OrderProduct.push({
-      id: 0,
-      name: product ? product.name : "",
-      productId: selectedProduct.id,
-      quantity: selectedProduct.quantity,
-      price: product ? product.price : 0,
-      total: product ? product.price * selectedProduct.quantity : 0,
-    });
-
-    calcTotals();
-    closeModal();
-  };
-
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedProduct({ quantity: 0, id: 0 });
     setShowModal(false);
-  };
+  }, []);
+
+  const handleProductSelect = useCallback(() => {
+    const product = productList.find((p) => p.id === selectedProduct.id);
+
+    setOrder((prevOrder) => {
+      return {
+        ...prevOrder,
+        OrderProduct: [
+          ...prevOrder.OrderProduct,
+          {
+            id: 0,
+            name: product ? product.name : "",
+            productId: selectedProduct.id,
+            quantity: selectedProduct.quantity,
+            price: product ? product.price : 0,
+            total: product ? product.price * selectedProduct.quantity : 0,
+          },
+        ],
+      };
+    });
+    calcTotals();
+    closeModal();
+  }, [
+    calcTotals,
+    closeModal,
+    productList,
+    selectedProduct.id,
+    selectedProduct.quantity,
+  ]);
 
   return (
     <div className="w-full h-[100vh] p-[20px] flex justify-center items-start">
@@ -288,9 +308,7 @@ const CreateOrder: React.FC = () => {
 
         <ProductOrderTable
           orderProducts={order.OrderProduct}
-          onDeleteProduct={(productId) => {
-            handleDeleteOrderProduct(productId);
-          }}
+          onDeleteProduct={(productId) => handleDeleteOrderProduct(productId)}
           className="h-[300px]"
         />
 

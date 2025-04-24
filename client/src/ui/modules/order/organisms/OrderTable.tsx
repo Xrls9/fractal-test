@@ -4,15 +4,15 @@ import OrderRow from "./OrderRow";
 import { Order } from "../../../../core/templates/order";
 
 export interface OrderTableProps {
-  orders: Order[];
-  onEditOrder: (orderId: number) => void;
   onDeleteOrder: (orderId: number) => void;
+  onEditOrder: (orderId: number) => void;
+  orders: Order[];
 }
 
 const OrderTable: React.FC<OrderTableProps> = ({
-  orders,
-  onEditOrder,
   onDeleteOrder,
+  onEditOrder,
+  orders,
 }) => {
   return (
     <div className="overflow-x-auto">
@@ -24,6 +24,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
             <th className="py-3 px-6 text-center">Date</th>
             <th className="py-3 px-6 text-center">Products Qty</th>
             <th className="py-3 px-6 text-center">Final Price</th>
+            <th className="py-3 px-6 text-center">Status</th>
             <th className="py-3 px-6 text-center">Options</th>
           </tr>
         </thead>

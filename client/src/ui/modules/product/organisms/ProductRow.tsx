@@ -3,15 +3,15 @@ import ActionButtons from "../../../shared/molecules/ActionButtons";
 import { Product } from "../../../../core/templates/product";
 
 interface ProductRowProps {
-  product: Product;
-  onEdit: (product: Product) => void;
   onDelete: (productId: number) => void;
+  onEdit: (product: Product) => void;
+  product: Product;
 }
 
 const ProductRow: React.FC<ProductRowProps> = ({
-  product,
-  onEdit,
   onDelete,
+  onEdit,
+  product,
 }) => {
   const options = [
     {
