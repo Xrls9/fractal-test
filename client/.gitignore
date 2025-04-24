@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#buncfg
+bun.lock
+
+#envs
+.env
+.env.production

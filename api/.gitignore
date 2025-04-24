@@ -37,3 +37,6 @@ lerna-debug.log*
 #envs
 .env
 .env.production
+
+#buncfg
+bun.lock
