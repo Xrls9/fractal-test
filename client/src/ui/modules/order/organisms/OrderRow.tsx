@@ -1,11 +1,12 @@
 import React from "react";
 import ActionButtons from "../../../shared/molecules/ActionButtons";
 import { Order } from "../../../../core/templates/order";
+import Badge from "../../../shared/atoms/Badge";
 
 interface OrderRowProps {
-  order: Order;
-  onEdit: (orderId: number) => void;
   onDelete: (orderId: number) => void;
+  onEdit: (orderId: number) => void;
+  order: Order;
 }
 
 const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
@@ -31,6 +32,9 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
       <td className="py-3 px-6 text-center">{date}</td>
       <td className="py-3 px-6 text-center">{order.productsQty}</td>
       <td className="py-3 px-6 text-center">{order.total}</td>
+      <td className="py-3 px-6 text-center">
+        <Badge label="Hola" color="blue" />
+      </td>
       <td>
         <ActionButtons
           options={options}

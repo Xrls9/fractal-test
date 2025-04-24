@@ -1,23 +1,23 @@
 import React from "react";
 
 interface InputProps {
-  type: string;
-  value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
   className?: string;
   disabled?: boolean;
   name?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  type: string;
+  value: string | number;
 }
 
 const Input: React.FC<InputProps> = ({
-  type,
-  value,
-  onChange,
-  placeholder,
   className = "",
   disabled = false,
   name = "",
+  onChange,
+  placeholder,
+  type,
+  value,
 }) => {
   return (
     <input

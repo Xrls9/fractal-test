@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ConfirmationModal from "../../../shared/molecules/ConfirmationModal";
 import useNavigation from "../../../../core/services/navigationService";
 import OrderTable from "../organisms/OrderTable";
@@ -36,7 +36,7 @@ const OrderList: React.FC = () => {
     fetchOrders();
   }, []);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     if (selectedOrderId === null) return;
     try {
       const response = await fetch(`${url}/orders/${selectedOrderId}`, {
@@ -52,7 +52,7 @@ const OrderList: React.FC = () => {
     } catch (err) {
       console.log("err :>> ", err);
     }
-  };
+  }, [selectedOrderId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -93,7 +93,7 @@ const OrderList: React.FC = () => {
           <ConfirmationModal
             show={showConfirmation}
             message="Are you sure you want to delete this order?"
-            onAccept={() => handleDelete()}
+            onAccept={handleDelete}
             onCancel={() => setShowConfirmation(false)}
           />
         </div>

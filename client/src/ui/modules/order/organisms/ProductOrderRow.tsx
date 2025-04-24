@@ -3,13 +3,13 @@ import ActionButtons from "../../../shared/molecules/ActionButtons";
 import { OrderProduct } from "../../../../core/templates/order";
 
 interface OrderProductRowProps {
-  orderProduct: OrderProduct;
   onDelete: (productId: number) => void;
+  orderProduct: OrderProduct;
 }
 
 const OrderProductRow: React.FC<OrderProductRowProps> = ({
-  orderProduct,
   onDelete,
+  orderProduct,
 }) => {
   const options = [
     {

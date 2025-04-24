@@ -6,28 +6,20 @@ interface SelectOption {
 }
 
 interface SelectProps {
+  className: string;
+  handleSelect: (value: number) => void;
   id: string;
   name: string;
-  className: string;
   options: SelectOption[];
-  handleSelect: (value: number) => void;
 }
 
 const Select: React.FC<SelectProps> = ({
-  options,
-  name,
-  id,
   className = "",
   handleSelect,
+  id,
+  name,
+  options,
 }) => {
-  const Options = () => {
-    return options.map((option) => (
-      <option key={option.value} value={option.value} className="bg-black">
-        {option.label}
-      </option>
-    ));
-  };
-
   return (
     <select
       className={className}
@@ -39,7 +31,11 @@ const Select: React.FC<SelectProps> = ({
       <option value="" disabled className="bg-black">
         Select an option
       </option>
-      {Options()}
+      {options.map((option) => (
+        <option key={option.value} value={option.value} className="bg-black">
+          {option.label}
+        </option>
+      ))}
     </select>
   );
 };

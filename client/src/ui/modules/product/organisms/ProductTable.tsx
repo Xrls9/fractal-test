@@ -3,15 +3,15 @@ import ProductRow from "./ProductRow";
 import { Product } from "../../../../core/templates/product";
 
 export interface ProductTableProps {
-  products: Product[];
-  onEditProduct: (product: Product) => void;
   onDeleteProduct: (productId: number) => void;
+  onEditProduct: (product: Product) => void;
+  products: Product[];
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({
-  products,
-  onEditProduct,
   onDeleteProduct,
+  onEditProduct,
+  products,
 }) => {
   return (
     <div className="overflow-x-auto">
