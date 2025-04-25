@@ -24,7 +24,7 @@ const OrderTable: React.FC<OrderTableProps> = ({
             <th className="py-3 px-6 text-center">Date</th>
             <th className="py-3 px-6 text-center">Products Qty</th>
             <th className="py-3 px-6 text-center">Final Price</th>
-            <th className="py-3 px-6 text-center">Status</th>
+            {/* <th className="py-3 px-6 text-center">Status</th> */}
             <th className="py-3 px-6 text-center">Options</th>
           </tr>
         </thead>

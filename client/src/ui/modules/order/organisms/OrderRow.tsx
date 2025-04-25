@@ -32,9 +32,9 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onEdit, onDelete }) => {
       <td className="py-3 px-6 text-center">{date}</td>
       <td className="py-3 px-6 text-center">{order.productsQty}</td>
       <td className="py-3 px-6 text-center">{order.total}</td>
-      <td className="py-3 px-6 text-center">
+      {/* <td className="py-3 px-6 text-center">
         <Badge label="Hola" color="blue" />
-      </td>
+      </td> */}
       <td>
         <ActionButtons
           options={options}
